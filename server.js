@@ -4,15 +4,16 @@ var http = require('http');
 let url = require('url')
 
 //from page 15 and 17, then expanded throughout
-function start() {
+function start(route, handle) {
 function onRequest(request, response) {
     let pathname = url.parse(request.url).pathname;
     console.log('Request for ' + pathname + 'received.');
     
-    route(pathname);
+    route(handle, pathname);
     
     response.writeHead(200, {'Content-Type': 'text/plain'});
-    response.write('Hello World');
+    let content = route(handle, pathname);
+    response.write(content);
     response.end();
   }
 
